@@ -1,3 +1,14 @@
 **/*.env
 
+
+# ide
 .idea
+.vscode
+
+
+# python
+**/__pycache__/
+
+
+# output
+**/output/
