@@ -23,6 +23,7 @@ Task: Write the complete 'main.py' based on the Design and Assets.
 3. Handle `pygame.QUIT` event to prevent freezing.
 4. Use `clock.tick(60)` for FPS control.
 5. Wrap the code in ```python ... ``` block.
+6. If the game needs physical engine, use and write it
 
 **Warning**: This is the sample, that you can reference to. 
 However, it doesn't mean you should write like this.
