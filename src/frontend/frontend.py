@@ -57,7 +57,7 @@ def index():
 
                 if game_file_path_global:
                     # --- Phase 3: QA ---
-                    fix_result = run_fix_loop(game_file_path_global, provider, model_name)
+                    fix_result = run_fix_loop(gdd_result_global, game_file_path_global, provider, model_name)
                 else:
                     flash("❌ 程式碼生成失敗，未能解析出 Python Block。", "danger")
 

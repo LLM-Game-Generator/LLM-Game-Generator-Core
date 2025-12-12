@@ -25,10 +25,13 @@ Return the fixed code inside a ```python ... ``` block.
 # Logics inspections
 LOGIC_REVIEW_PROMPT = """
 You are a Senior Game Developer reviewing Pygame code.
-Analyze the following code for LOGIC ERRORS, specifically regarding CONTROLS and MOVEMENT.
+Analyze the following code for LOGIC ERRORS, specifically regarding CONTROLS and MOVEMENT based on GDD.
 
 【CODE】:
 {code}
+
+【GDD requirements】:
+{gdd}
 
 【CHECKLIST】:
 1. Is `pygame.key.get_pressed()` called inside the main loop?
@@ -36,10 +39,9 @@ Analyze the following code for LOGIC ERRORS, specifically regarding CONTROLS and
 3. Is the player's speed/velocity non-zero? (Look for `speed = 0` bugs)
 4. Is `pygame.event.get()` called correctly to prevent freezing?
 5. Is the screen updated with `pygame.display.flip()` or `update()`?
-**Important**: The output should only be either "PASS" or "FAIL", do not include other texts.
+
 【OUTPUT FORMAT】:
-If the code is good and playable:
-PASS
+If the code is good and playable: strictly output: PASS
 
 If there are logic issues (e.g., player cannot move, missing update), output:
 FAIL: [Brief explanation of the error]
@@ -47,7 +49,14 @@ FAIL: [Brief explanation of the error]
 
 LOGIC_FIXER_PROMPT = """
 You are a Pygame Expert and QA Engineer.
-Help me Fix the codes below, and return the results codes to me.
+Help me Fix the codes based on GDD below, and return the results codes to me.
+
+【ERROR MESSAGE / LOGIC ISSUE】:
+{error}
+
+【GDD requirements】:
+{gdd}
+
 【CODE】:
 {code}
 

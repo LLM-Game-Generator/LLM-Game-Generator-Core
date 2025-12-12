@@ -24,4 +24,7 @@ class Config:
     OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY")
     OLLAMA_MODEL_NAME = os.getenv("OLLAMA_MODEL_NAME", "llama3:8b")
 
+    # Fuzzer
+    FUZZER_RUNNING_TIME = 30
+
 config = Config()
