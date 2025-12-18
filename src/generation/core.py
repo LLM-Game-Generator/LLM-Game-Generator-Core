@@ -41,6 +41,34 @@ def generate_code(
     return call_llm(PROGRAMMER_PROMPT_TEMPLATE, full_prompt, provider=provider, model=model, temperature=0.2)
 
 
+def generate_structural_code(
+        gdd_context: str,
+        asset_json: str,
+        provider: str = "mistral",
+        model: str = "codestral-latest"
+        
+):
+    """
+    Generate structural code according to the given gdd context and the given asset json.
+    :param gdd_context: The gdd context to generate code for
+    :type gdd_context: str
+
+    :param asset_json: The art asset json file
+    :type asset_json: str
+
+    :param provider: The LLM service provider
+    :type provider: str
+
+    :param model: The LLM model to use
+    :type model: str
+
+    :return: The generated code
+    :rtype: str
+    """
+
+
+
+
 def generate_fuzzer_logic(
         gdd_context: str,
         provider: str = "openai",

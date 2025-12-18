@@ -5,6 +5,9 @@
 .idea
 .vscode
 
+# http
+# **/*.http
+
 
 # python
 **/__pycache__/
