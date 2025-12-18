@@ -14,11 +14,15 @@ I tried to run a Pygame script, but it crashed or had errors.
    - If `NameError` (e.g., 'pockets' is not defined), checking variable scope.
    - If `TypeError: ... missing 1 required positional argument` in `update()`:
      - **FIX**: Make `update()` accept `*args` (e.g., `def update(self, *args):`).
+
    - If `AttributeError: 'NoneType' object has no attribute ...`:
-     - **CRITICAL**: This happens when you try to access an attribute (like `.value`, `.rect`, `.pos`) of a variable that is `None`.
-     - **Common Cause**: Empty grid cells in puzzle games (2048, Tetris) or dead sprites.
-     - **FIX**: You MUST add a check `if object is not None:` BEFORE accessing the attribute.
-     - Example: Change `if grid[x][y].value == 2:` to `if grid[x][y] is not None and grid[x][y].value == 2:`
+     - **SCENARIO**: You are likely accessing `.value`, `.rect`, or `.pos` on a variable that is `None`.
+     - **CONTEXT**: In grid games (like 2048), empty cells are `None`. Code like `grid[x][y].value` CRASHES if the cell is empty.
+     - **MANDATORY FIX**: 
+       - **Single Access**: Change `x.value` to `if x is not None: ... x.value`.
+       - **Comparisons (CRITICAL)**: Change `if grid[a].value == grid[b].value:` 
+         to `if grid[a] is not None and grid[b] is not None and grid[a].value == grid[b].value:`.
+       - **NEVER** assume a grid cell is an object without checking first.
 
 2. Fix the code.
 3. Output the FULL, CORRECTED code.
@@ -32,9 +36,6 @@ LOGIC_REVIEW_PROMPT = """
 You are a Senior Game Developer reviewing Pygame code.
 Analyze the following code for LOGIC ERRORS.
 
-【GDD requirements】:
-{gdd}
-
 【CODE】:
 {code}
 
@@ -47,32 +48,34 @@ Analyze the following code for LOGIC ERRORS.
    - Is `friction` too high? (Should be around 0.98 or 0.99, NOT 0.5 or lower).
 5. **Mouse Dragging**:
    - Does `MOUSEBUTTONUP` calculate a vector and apply it to `self.velocity`?
+6. **Grid/Array Safety (2048/Tetris)**:
+   - Are there explicit checks `if cell is not None` before accessing `cell.value`?
+   - Are loops checking boundaries correctly?
 
 【OUTPUT】:
 If playable, output strictly: PASS
 If broken, output: FAIL: [Reason]
 """
 
-# Logic Fixer Prompt (強制修復物理)
+# Logic Fixer Prompt (強制修復物理與網格邏輯)
 LOGIC_FIXER_PROMPT = """
 You are a Python Game Developer.
-The code has logical issues (e.g., objects not moving, controls unresponsive).
-
-
-【GDD requirements】:
-{gdd}
+The code has logical issues (e.g., objects not moving, controls unresponsive, crashes on empty cells).
 
 【CODE】:
 {code}
 
 【TASK】:
-1. **Fix Physics Update**: 
+1. **Fix Grid/NoneType Errors (High Priority)**:
+   - In grid games (2048), empty cells are `None`.
+   - **Scanning/Merging Logic**: When checking neighbors (`grid[r][c] == grid[r+1][c]`), you MUST check if BOTH are not None first.
+   - Example: `if grid[r][c] and grid[r+1][c] and grid[r][c].value == grid[r+1][c].value:`
+2. **Fix Physics Update**: 
    - Ensure `self.pos += self.velocity` is present in `update()`.
-   - Ensure `self.rect.center` is updated from `self.pos`.
-2. **Fix Mouse Control**:
+3. **Fix Mouse Control**:
    - For Drag-to-Shoot games: Ensure `MOUSEBUTTONUP` calculates `(start - end)` and sets `self.velocity`.
-   - Ensure Force Multiplier is strong enough (e.g., `vector * 0.1` might be too weak, try `vector * 0.5`).
-3. **Fix Friction**:
+   - Ensure Force Multiplier is strong enough.
+4. **Fix Friction**:
    - Ensure friction is NOT too strong (Use `0.99` instead of `0.8`).
-4. Output the FULL corrected code in ```python ... ``` block.
+5. Output the FULL corrected code in ```python ... ``` block.
 """

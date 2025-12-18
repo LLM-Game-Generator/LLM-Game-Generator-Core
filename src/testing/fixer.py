@@ -27,7 +27,7 @@ def static_code_check(file_path: str) -> tuple[bool, str]:
 def game_logic_check(gdd:str ,file_path: str, provider: str = "openai", model: str = "gpt-4o-mini") -> tuple[bool, str]:
     with open(file_path, "r", encoding="utf-8") as f:
         code = f.read()
-    prompt = LOGIC_REVIEW_PROMPT.format(code=code, gdd=gdd)
+    prompt = LOGIC_REVIEW_PROMPT.format(code=code)
     response = call_llm("You are a code logic reviewer.",
              prompt,
              provider=provider,

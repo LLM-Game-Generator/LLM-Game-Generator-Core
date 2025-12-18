@@ -175,8 +175,8 @@ def run_fuzz_test(file_path: str, duration: int = 5) -> tuple[bool, str]:
             stdout, stderr = process.communicate(timeout=duration)
         except subprocess.TimeoutExpired:
             process.kill()
-            if os.path.exists(temp_file):
-                os.remove(temp_file)
+            # if os.path.exists(temp_file):
+            #     os.remove(temp_file)
             return True, "Fuzz Test Passed (Survived random inputs)."
 
         if os.path.exists(temp_file):
