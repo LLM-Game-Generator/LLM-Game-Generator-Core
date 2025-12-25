@@ -56,6 +56,9 @@ import pygame
 import sys
 import random
 import math
+import subprocess
+import os
+
 
 WIDTH, HEIGHT = 800, 600
 FPS = 60
@@ -73,6 +76,14 @@ def draw_text(screen, text, size, color, x, y):
     text_surface = font.render(text, True, color)
     text_rect = text_surface.get_rect(center=(x, y))
     screen.blit(text_surface, text_rect)
+
+
+def restart_program():
+    python_exe = sys.executable  # 當前 Python 執行檔路徑
+    script_path = os.path.abspath(sys.argv[0])
+    subprocess.Popen([python_exe, script_path])  # 啟動新進程
+    pygame.quit()
+    sys.exit()  # 關閉舊程式
 
 def main():
     pygame.init()
@@ -103,9 +114,8 @@ def main():
 
             elif game_state == "GAME_OVER":
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                    # Reset Game Logic
-                    game_state = "START"
-                    # Reset sprites...
+                print("R key pressed! Detected.")  # 先測試偵測
+
 
         # 2. Update & Draw
         screen.fill((0,0,0))
