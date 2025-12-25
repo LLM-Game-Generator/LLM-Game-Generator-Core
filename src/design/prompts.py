@@ -33,21 +33,16 @@ Instructions:
 - Present the inputs and their functions in a list or table format.
 - Define any limits or constraints (speed, cooldown, boundaries).
 
-### 4. interactions
-- List all game entities in the game (e.g., enemies, items, obstacles).
+### 4. Description of Entities
+- List the main entities in the game (player, enemies, items).
 - Describe how the player interacts with each game entity, and how the entities interact each other.
 
-### 5. Core loop
-- Specify any core mechanics that drive the game loop.
-
-### 6. Win and Loss Conditions
-- Does the game has Win / Lose state? Explain how the player can win or lose.
-- Include any score, time, or survival conditions.
+### 5. Win and Loss Conditions
+- Does the game has Win / Lose state?
+- Explain how the player can win or lose.
+- Include any score, timeout, or survival conditions.
 - If the player win, the game should show a yellow text on the screen "YOU WIN", If the player lose, a yellow text "GAME OVER" should be shown.
 
-### 7. Description of Entities
-- List the main entities in the game (player, enemies, items).
-- Briefly describe their behavior and role in the gameplay.
 
 3. Keep it simple and focused on an MVP version of the game.
 4. Avoid unnecessary technical details; focus on design and rules.
